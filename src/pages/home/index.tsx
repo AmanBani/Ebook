@@ -168,11 +168,6 @@ function HomePage() {
       label: "Copy",
       icon: <FileTextOutlined />,
     },
-    {
-      key: "2",
-      label: " QR Code",
-      icon: <QrcodeOutlined />,
-    },
   ];
 
   useEffect(() => {
@@ -207,13 +202,14 @@ function HomePage() {
 
   return (
     <div
-      style={{
-        background: "white",
-        minHeight: "calc(100vh - 94px)",
-        color: "white",
-        margin: "16px 24px",
-        padding: "12px 32px",
-      }}
+    style={{
+      background: "black",
+      minHeight: "calc(100vh - 94px)",
+      color: "white", 
+      margin: "16px 24px",
+      padding: "12px 32px",
+    }}
+    
     >
       <Spin spinning={isLicenseLoading || isSupportCountLoading}>
         <QrModal
@@ -252,6 +248,7 @@ function HomePage() {
                     fontSize: 22,
                     transform: "scale(1, 1.1)",
                     fontWeight: 600,
+                    color:'white',
                   }}
                 >
                   Welcome, {userAccount?.profile.name}
@@ -284,58 +281,69 @@ function HomePage() {
           }}
           gutter={[16, 8]}
         >
-          <Col span={24} style={{ textAlign: "center" }}>
+          <Col span={24} style={{ textAlign: "center",}}>
             <Typography.Text
-              style={{
-                display: "inline-block",
-                fontSize: 20,
-                transform: "scale(1, 1.1)",
-                fontWeight: 500,
-                color: token.colorPrimary,
-                borderBottom: "1px solid #dfdfdf",
-              }}
+             style={{
+              display: "inline-block",
+              fontSize: "2rem",
+              transform: "scale(1, 1.1)",
+              fontWeight: 900,
+              color: "#C0C0C0", 
+              borderBottom: "3px solid #b0b0b0", 
+              padding: "4px 8px", 
+              borderRadius: "4px", 
+              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)", 
+            }}
+            
             >
-              Earnings
+              Total Earnings
             </Typography.Text>
           </Col>
-          <Col xs={24} md={8} style={{ textAlign: "center" }}>
+          <Col xs={24} md={8} style={{ textAlign: "center", paddingTop:20  }}>
             <Typography.Text
               style={{
                 fontSize: 18,
                 fontWeight: 500,
-                color: "gray",
+                color: "white",
+                border: "4px solid white",
+                padding: 10,
               }}
             >
               TOTAL STORAGE SUPPORTS:{" "}
-              <span style={{ color: token.colorPrimary }}>
+              <span style={{ color: "#008000",fontSize: 20,fontWeight: 700 }}> 
                 {stats.earnings} MB
               </span>
             </Typography.Text>
           </Col>
-          <Col xs={24} md={8} style={{ textAlign: "center" }}>
+          <Col xs={24} md={8} style={{ textAlign: "center", paddingTop:20  }}>
             <Typography.Text
               style={{
                 fontSize: 18,
                 fontWeight: 500,
-                color: "gray",
+                color: "white",
+                border: "4px solid white",
+                padding: 10,
               }}
             >
               AR LICENSE EARNINGS:{" "}
-              <span style={{ color: token.colorPrimary }}>
+              <span style={{ color: "#008000",fontSize: 20,fontWeight: 700 }}> 
                 {licenseEarnings.AR} AR
               </span>
             </Typography.Text>
           </Col>
-          <Col xs={24} md={8} style={{ textAlign: "center" }}>
+          <Col xs={24} md={8} style={{ textAlign: "center", paddingTop:20 }}>
             <Typography.Text
               style={{
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: 500,
-                color: "gray",
+                color: "white",
+                border: "4px solid white",
+                padding: 10,
               }}
             >
               U LICENSE EARNINGS:{" "}
-              <span style={{ color: token.colorPrimary }}>
+              <span style={{ color: "#008000",fontSize: 20,fontWeight: 700,  }}> 
+
                 {licenseEarnings.U} U
               </span>
             </Typography.Text>

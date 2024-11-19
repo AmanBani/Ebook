@@ -12,15 +12,15 @@ const { getDesignToken } = theme;
 
 const globalToken = getDesignToken(customTheme);
 
-// Updated header styles
+
 const headerStyle: React.CSSProperties = {
-  height: 80, // Increased height
-  lineHeight: "80px", // Adjusted line height
+  height: 80, 
+  lineHeight: "80px", 
   backgroundColor: "black",
   color: "white",
   boxShadow: "0 2px 3px -2px rgba(255,255,255,0.3)",
-  padding: "0 30px", // Extra padding for more spacing
-  fontFamily: "'Poppins', sans-serif", // Stylish font
+  padding: "0 30px", 
+  fontFamily: "'Poppins', sans-serif", 
 };
 
 interface NavItem {
