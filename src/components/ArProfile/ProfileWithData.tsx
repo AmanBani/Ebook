@@ -80,7 +80,7 @@ export default function ProfileWithData({
   };
 
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "100%",backgroundColor:'black' }}>
       <EditProfileModal
         addr={addr}
         profile={userAccount.profile}
@@ -88,17 +88,29 @@ export default function ProfileWithData({
         onClose={onClose}
         refetch={refetch}
       />
-      <div>
-        <img
-          style={{
-            height: "330px",
-            width: "100%",
-            objectFit: "cover",
-          }}
-          src={userAccount.profile.bannerURL}
-          alt="Banner"
-        />
-      </div>
+      <div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "200px", // Optional: Matches the image height
+    marginBottom: "20px", 
+    // Optional: Add space between sections
+  }}
+>
+  <img
+    style={{
+      height: "200px",
+      width: "80%",
+      objectFit: "cover",
+      marginTop:"30px",
+      borderRadius:'200px'
+    }}
+    src={userAccount.profile.bannerURL}
+    alt="Banner"
+  />
+</div>
+
       <div
         style={{
           display: "flex",
@@ -125,7 +137,7 @@ export default function ProfileWithData({
             gap: "3px",
           }}
         >
-          <Text style={{ fontSize: "1.5rem", fontWeight: 500 }}>
+          <Text style={{ fontSize: "2rem", fontWeight: 700,color:'white' }}>
             {userAccount.profile.name}
           </Text>
           <div style={{ display: "flex", gap: 4 }}>
@@ -259,16 +271,7 @@ export default function ProfileWithData({
             >
               Edit Profile
             </Button>
-            {userAccount.profile.handleName && (
-              <Button
-                type="primary"
-                style={{ borderRadius: "999px" }}
-                icon={<ShoppingCartOutlined style={{ fontSize: 18 }} />}
-                onClick={() => router.push(`/${userAccount.handle}`)}
-              >
-                Buy Me a Storage Page
-              </Button>
-            )}
+           
           </div>
         )}
       </div>
