@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Avatar,
   Button,
-  Image,
   Tooltip,
   Typography,
   message,
@@ -14,7 +13,6 @@ import {
   InstagramOutlined,
   FacebookOutlined,
   ToolOutlined,
-  ShoppingCartOutlined,
   CheckOutlined,
 } from "@ant-design/icons";
 import { FaDiscord } from "react-icons/fa";
@@ -80,7 +78,14 @@ export default function ProfileWithData({
   };
 
   return (
-    <div style={{ width: "100%",backgroundColor:'black' }}>
+    <div
+      style={{
+        minWidth: "100vh",
+        minHeight: "100vh",
+        backgroundColor: "black",
+        padding: "20px",
+      }}
+    >
       <EditProfileModal
         addr={addr}
         profile={userAccount.profile}
@@ -88,34 +93,35 @@ export default function ProfileWithData({
         onClose={onClose}
         refetch={refetch}
       />
-      <div
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "200px", // Optional: Matches the image height
-    marginBottom: "20px", 
-    // Optional: Add space between sections
-  }}
->
-  <img
-    style={{
-      height: "200px",
-      width: "80%",
-      objectFit: "cover",
-      marginTop:"30px",
-      borderRadius:'200px'
-    }}
-    src={userAccount.profile.bannerURL}
-    alt="Banner"
-  />
-</div>
 
       <div
         style={{
           display: "flex",
           justifyContent: "center",
-          marginTop: "-60px",
+          alignItems: "center",
+          height: "300px",
+          marginBottom: "20px",
+        }}
+      >
+        <img
+          style={{
+            height: "200px",
+            width: "80%",
+            objectFit: "cover",
+            marginTop: "30px",
+            borderRadius: "200px",
+          }}
+          src={userAccount.profile.bannerURL}
+          alt="Banner"
+        />
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "-110px",
+          backgroundColor: "black",
         }}
       >
         <Avatar
@@ -128,7 +134,14 @@ export default function ProfileWithData({
         />
       </div>
 
-      <div style={{ padding: "12px 16px 16px 16px" }}>
+      <div
+        style={{
+          padding: "20px 10px 10px 10px",
+          border: "2px solid #fff",
+          borderRadius: "8px",
+          backgroundColor: "black",
+        }}
+      >
         <div
           style={{
             display: "flex",
@@ -137,7 +150,7 @@ export default function ProfileWithData({
             gap: "3px",
           }}
         >
-          <Text style={{ fontSize: "2rem", fontWeight: 700,color:'white' }}>
+          <Text style={{ fontSize: "2.5rem", fontWeight: 800, color: "white" }}>
             {userAccount.profile.name}
           </Text>
           <div style={{ display: "flex", gap: 4 }}>
@@ -168,7 +181,7 @@ export default function ProfileWithData({
           style={{
             display: "flex",
             justifyContent: "center",
-            gap: 12,
+            gap: 20,
             marginBottom: showEditProfile ? 16 : 0,
           }}
         >
@@ -178,14 +191,11 @@ export default function ProfileWithData({
               target="_blank"
               rel="noreferrer"
             >
-              <StyledButton
-                icon={<TwitterOutlined style={{ fontSize: 25 }} />}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "#00acee",
-                }}
-              />
+            <StyledButton
+  icon={<TwitterOutlined style={{ fontSize: 45, color: "#1DA1F2" }} />} // Increased fontSize
+  style={{ background: "transparent", border: "none" }}
+/>
+
             </a>
           )}
           {userAccount.profile.links.github && (
@@ -195,12 +205,8 @@ export default function ProfileWithData({
               rel="noreferrer"
             >
               <StyledButton
-                icon={<GithubOutlined style={{ fontSize: 25 }} />}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "#161b21",
-                }}
+                icon={<GithubOutlined style={{ fontSize: 45, color: "#FFF" }} />}
+                style={{ background: "transparent", border: "none" }}
               />
             </a>
           )}
@@ -211,12 +217,8 @@ export default function ProfileWithData({
               rel="noreferrer"
             >
               <StyledButton
-                icon={<InstagramOutlined style={{ fontSize: 25 }} />}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "#f6a4c8",
-                }}
+                icon={<InstagramOutlined style={{ fontSize: 45, color: "#E1306C" }} />}
+                style={{ background: "transparent", border: "none" }}
               />
             </a>
           )}
@@ -227,12 +229,8 @@ export default function ProfileWithData({
               rel="noreferrer"
             >
               <StyledButton
-                icon={<FacebookOutlined style={{ fontSize: 25 }} />}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "#3b5998",
-                }}
+                icon={<FacebookOutlined style={{ fontSize: 45, color: "#4267B2" }} />}
+                style={{ background: "transparent", border: "none" }}
               />
             </a>
           )}
@@ -243,11 +241,10 @@ export default function ProfileWithData({
             >
               <span>
                 <StyledButton
-                  icon={<FaDiscord style={{ fontSize: 25 }} />}
+                  icon={<FaDiscord style={{ fontSize: 45, color: "#7289DA" }} />}
                   style={{
                     background: "transparent",
                     border: "none",
-                    color: "#738adb",
                   }}
                 />
               </span>
@@ -271,7 +268,6 @@ export default function ProfileWithData({
             >
               Edit Profile
             </Button>
-           
           </div>
         )}
       </div>
