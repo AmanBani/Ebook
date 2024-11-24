@@ -1,8 +1,8 @@
-export const APP_NAME = "BuyMeAStorage";
+export const APP_NAME = "EverShelf";
 export const APP_VERSION = "1.0.0";
-export const SUPPORT_ADDRESS = "zbZx09KR76a--wo5zYWkXyC2BpBKXp55hPIZq2MjIz8";
+export const SUPPORT_ADDRESS = "3FdBa4eKD917eN1WwwCytav9nEiEINvnxz8IArc3o7g";
 export const SUPPORT_HANDLE = "@BuyMeaStorage-zbZIz8";
-export const ATOMIC_ASSET_SRC = "Of9pi--Gj7hCTawhgxOwbuWnFI1h24TTgO5pw8ENJNQ";
+export const ATOMIC_ASSET_SRC = "cb58d10d-8df5-4289-b75b-dd42ac50b6ec";
 export const UDL = "yRj4a5KMctX_uOmKWCFJIjmY8DeJcusVk6-HzLiM_t8";
 export const U_CONTRACT_ID = "KTzTXT_ANmF84fWEKHzWURD1LWd9QaFR9yfYUwH2Lxw";
 export const PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----

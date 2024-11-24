@@ -125,10 +125,10 @@ export default function ProfileWithData({
         }}
       >
         <Avatar
-          size={120}
+          size={130}
           src={userAccount.profile.avatarURL}
           style={{
-            border: `2px solid ${token.colorPrimary}`,
+            border: `5px solid ${token.colorPrimary}`,
             background: "white",
           }}
         />

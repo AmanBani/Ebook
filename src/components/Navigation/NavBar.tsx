@@ -99,14 +99,14 @@ const NavBar = () => {
         <Space direction="horizontal" size={24}>
           <NextLink href="/">
             <Image
-              width="60px" // Increased logo size
+              width="60px" 
               src="/icon.svg"
               alt="logo"
               style={{ borderRadius: "50%" }}
               preview={false}
             />
           </NextLink>
-          <Space size={20}> {/* Adjusted spacing between links */}
+          <Space size={20}> 
             {NavItems.map((item) => (
               <NavLink key={item.key} href={item.href as string}>
                 {item.label}

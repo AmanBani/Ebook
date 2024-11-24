@@ -30,7 +30,7 @@ export const getHomeItems = (userHandle: string) => {
     getItem("ArProfile", "/profile", <TeamOutlined />),
   ];
   if (userHandle) {
-    allItems.push(getItem("View page", `/${userHandle}`, <TeamOutlined />));
+    // allItems.push(getItem("View page", `/${userHandle}`, <TeamOutlined />));
   }
   allItems.push(getItem("Support", `/${SUPPORT_HANDLE}`, <TeamOutlined />));
   return allItems;
@@ -43,8 +43,8 @@ export const getPublishItems = () => {
   return allItems;
 };
 export const getSettingItems = () => {
-  const allItems = [
-    getItem("Buttons", "/generate-buttons", <WindowsOutlined />),
-  ];
-  return allItems;
+  // // const allItems = [
+  // //   getItem("Buttons", "/generate-buttons", <WindowsOutlined />),
+  // // ];
+  // return allItems;
 };
