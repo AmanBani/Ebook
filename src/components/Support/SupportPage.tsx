@@ -97,7 +97,7 @@ export default function SupportPage({ address }: { address?: string }) {
         }
 
         if (user) {
-          // Update favicon & title
+          
           if (title) {
             title.innerText = user.profile.name || user.handle;
           }
@@ -124,7 +124,7 @@ export default function SupportPage({ address }: { address?: string }) {
     })();
 
     return () => {
-      // Reset favicon and title to previous values when component unmounts
+      
       if (favicon) {
         favicon.href = "/favicon.ico";
       }
@@ -132,7 +132,7 @@ export default function SupportPage({ address }: { address?: string }) {
         title.innerText = "Buy Me a Storage";
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [router.isReady, handle, address]);
 
   useEffect(() => {
@@ -157,7 +157,7 @@ export default function SupportPage({ address }: { address?: string }) {
         }
       })();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [connectedAddress]);
 
   async function support(e: { preventDefault: () => void }) {
@@ -242,7 +242,7 @@ export default function SupportPage({ address }: { address?: string }) {
         }
       })();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, [storageValue, storageUnit, arweavePrice]);
 
   async function getArweavePrice() {

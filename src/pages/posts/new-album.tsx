@@ -1,9 +1,9 @@
+
 import React, { useRef, useState } from "react";
 import {
   Button,
   Col,
   Form,
-  Image,
   Input,
   Row,
   Select,
@@ -13,9 +13,8 @@ import {
 } from "antd";
 import { InboxOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
-import ImageCard from "@/components/Cards/ImageCard";
 import { useRouter } from "next/router";
-import { arweave, currencyOptions, getMimeType, licenseOptions } from "@/utils";
+import { arweave, currencyOptions, licenseOptions } from "@/utils";
 import { registerContract } from "@/lib/warp/asset";
 import {
   UDL,
@@ -27,21 +26,23 @@ import { useActiveAddress, useApi } from "arweave-wallet-kit";
 import { ITag } from "@/types";
 import { withPrivateRoutes } from "@/hoc";
 import { dispatchTransaction } from "@/lib/arconnect";
+import PdfCard from "@/components/Cards/PdfCard";
 
 const { Dragger } = Upload;
 
-function NewPhoto() {
-  const [photoForm] = Form.useForm();
+function NewPdf() {
+  const [pdfForm] = Form.useForm();
   const lockRef = useRef(false);
   const router = useRouter();
   const [fileList, setFileList] = useState<any>([]);
+  const [pdfUrls, setPdfUrls] = useState<{ url: string; title: string }[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showAmountInput, setShowAmountInput] = useState(false);
   const activeAddress = useActiveAddress();
   const walletApi = useApi();
   const existingUidsRef = useRef(new Set<string>());
 
-  const formSubmitHandler = async (image: {
+  const formSubmitHandler = async (pdf: {
     title: string;
     topics: string;
     description: string;
@@ -53,8 +54,8 @@ function NewPhoto() {
     setIsLoading(true);
     try {
       let topics: ITag[] = [];
-      if (image.topics) {
-        topics = image.topics.split(",").map((topic) => {
+      if (pdf.topics) {
+        topics = pdf.topics.split(",").map((topic) => {
           topic = topic.trim();
           return { name: `topic:${topic}`, value: topic };
         });
@@ -64,14 +65,14 @@ function NewPhoto() {
         file: { originFileObj },
       } of fileList) {
         try {
-          const contentType = await getMimeType(originFileObj);
+          const contentType = "application/pdf";  // Set the content type for PDFs
           const tags = [
             { name: "App-Name", value: APP_NAME },
             { name: "App-Version", value: APP_VERSION },
             { name: "Content-Type", value: contentType },
-            { name: "Title", value: image.title },
-            { name: "Description", value: image.description },
-            { name: "Type", value: "image" },
+            { name: "Title", value: pdf.title },
+            { name: "Description", value: pdf.description },
+            { name: "Type", value: "pdf" },
             ...topics,
           ];
 
@@ -93,9 +94,9 @@ function NewPhoto() {
         { name: "Indexed-By", value: "ucm" },
         { name: "License", value: UDL },
         { name: "Payment-Mode", value: "Global-Distribution" },
-        { name: "Title", value: image.title },
-        { name: "Description", value: image.description },
-        { name: "Type", value: "image-album" },
+        { name: "Title", value: pdf.title },
+        { name: "Description", value: pdf.description },
+        { name: "Type", value: "pdf-album" },
         { name: "Protocol", value: `${APP_NAME}-Post-v${APP_VERSION}` },
         { name: "Published", value: published.toString() },
         {
@@ -107,12 +108,12 @@ function NewPhoto() {
         {
           name: "Init-State",
           value: JSON.stringify({
-            title: image.title,
-            description: image.description,
+            title: pdf.title,
+            description: pdf.description,
             creator: activeAddress,
             claimable: [],
             ticker: "ATOMIC-POST",
-            name: image.title,
+            name: pdf.title,
             balances: {
               [activeAddress as string]: 100,
             },
@@ -125,35 +126,32 @@ function NewPhoto() {
         },
       ].concat(topics);
 
-      // if (image.license === "access") {
-      //   tags.push({ name: "Access", value: "Restricted" });
-      // }
-
-      if (image.license === "derivative-credit") {
+      // Add any licensing and payment related tags
+      if (pdf.license === "derivative-credit") {
         tags.push({ name: "Derivation", value: "Allowed-with-credit" });
       }
 
-      if (image.license === "derivative-indication") {
+      if (pdf.license === "derivative-indication") {
         tags.push({
           name: "Derivation",
           value: "Allowed-with-indication",
         });
       }
 
-      if (image.license === "commercial") {
+      if (pdf.license === "commercial") {
         tags.push({ name: "Commercial-Use", value: "Allowed" });
       }
 
-      if (image.license === "commercial-credit") {
+      if (pdf.license === "commercial-credit") {
         tags.push({ name: "Commercial-Use", value: "Allowed-with-credit" });
       }
 
-      if (image.payment) {
-        tags.push({ name: "License-Fee", value: "One-Time-" + image.payment });
+      if (pdf.payment) {
+        tags.push({ name: "License-Fee", value: "One-Time-" + pdf.payment });
       }
 
-      if (image.currency && image.currency !== "U") {
-        tags.push({ name: "Currency", value: image.currency });
+      if (pdf.currency && pdf.currency !== "U") {
+        tags.push({ name: "Currency", value: pdf.currency });
       }
       const data = JSON.stringify(transactionIds);
       const transaction = await arweave.createTransaction({ data });
@@ -163,15 +161,15 @@ function NewPhoto() {
       if (response?.id) {
         const contractTxId = await registerContract(response?.id);
         setFileList([]);
-        message.success("Image published sucessfully!");
-        photoForm.resetFields();
+        message.success("PDF published successfully!");
+        pdfForm.resetFields();
         setShowAmountInput(false);
       } else {
-        throw new Error("Image publish error");
+        throw new Error("PDF publish error");
       }
     } catch (error) {
       message.error({
-        content: "Image publish error",
+        content: "PDF publish error",
       });
     }
 
@@ -179,7 +177,7 @@ function NewPhoto() {
   };
 
   const resetHandler = () => {
-    photoForm.resetFields();
+    pdfForm.resetFields();
     setFileList([]);
   };
 
@@ -191,7 +189,7 @@ function NewPhoto() {
     name: "file",
     multiple: true,
     fileList: fileList,
-    accept: "image/*",
+    accept: ".pdf",  // Only accept PDF files
     showUploadList: false,
     beforeUpload: () => false,
     onChange: async (info: any) => {
@@ -229,11 +227,14 @@ function NewPhoto() {
       console.log("Dropped files", e.dataTransfer.files);
     },
   };
+  const handleDelete = (url: string) => {
+    setPdfUrls((prev) => prev.filter((pdf) => pdf.url !== url));
+  };
 
   return (
     <Row style={{ width: "100%", padding: "16px 24px" }}>
       <Form
-        form={photoForm}
+        form={pdfForm}
         layout="vertical"
         preserve={false}
         onFinish={formSubmitHandler}
@@ -252,36 +253,36 @@ function NewPhoto() {
             <Form.Item
               style={{ marginBottom: 8 }}
               name="files"
-              rules={[
-                { required: true, message: "Please click or drag a image" },
-              ]}
+              rules={[{ required: true, message: "Please click or drag a PDF" }]}
             >
               <Dragger {...props}>
                 <p className="ant-upload-drag-icon">
                   <InboxOutlined />
                 </p>
                 <p className="ant-upload-text">
-                  Click or drag image to this area to upload
+                  Click or drag PDF to this area to upload
                 </p>
                 <p className="ant-upload-hint">
-                  Support for multiple images upload. Strictly prohibited from
+                  Support for multiple PDFs upload. Strictly prohibited from
                   uploading company data or other banned files.
                 </p>
               </Dragger>
             </Form.Item>
-            <Row
-              gutter={[8, 8]}
-              style={{ padding: 8, display: "flex", justifyContent: "center" }}
-            >
-              <Image.PreviewGroup>
-                {fileList?.map((file: any, index: number) => {
-                  return <ImageCard key={index} attach={file} />;
-                })}
-              </Image.PreviewGroup>
+            <Row gutter={[16, 16]}>
+              {pdfUrls.map((pdf, index) => (
+                <Col key={index} md={12} xs={24}>
+                  <PdfCard
+                    title={pdf.title}
+                    pdfUrl={pdf.url}
+                    onDelete={() => handleDelete(pdf.url)}
+                  />
+                </Col>
+              ))}
             </Row>
           </Col>
           <Col md={24} xs={24}>
             <Form.Item
+                         
               name="title"
               label="Title"
               rules={[
@@ -308,7 +309,7 @@ function NewPhoto() {
             <Form.Item
               name="topics"
               label="Topics"
-              help="Enter a comma-separated list topics"
+              help="Enter a comma-separated list of topics"
               style={{ marginBottom: 8 }}
             >
               <Input.TextArea
@@ -322,7 +323,7 @@ function NewPhoto() {
               rules={[
                 {
                   required: true,
-                  message: "please select license!",
+                  message: "Please select a license!",
                 },
               ]}
               style={{ marginBottom: 8 }}
@@ -363,7 +364,7 @@ function NewPhoto() {
             <Button onClick={resetHandler}>Reset</Button>
             <Button
               type="primary"
-              onClick={() => photoForm.submit()}
+              onClick={() => pdfForm.submit()}
               loading={isLoading}
             >
               Publish
@@ -374,4 +375,5 @@ function NewPhoto() {
     </Row>
   );
 }
-export default withPrivateRoutes(NewPhoto);
+
+export default withPrivateRoutes(NewPdf);
